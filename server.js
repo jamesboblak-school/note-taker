@@ -1,3 +1,4 @@
+// Consts
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -7,7 +8,9 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.static('public'));
 
 // Routes
@@ -22,7 +25,7 @@ app.get('/notes', (req, res) =>
 
 // GET request for notes
 app.get('/api/notes', (req, res) => {
-  
+
   // Show notes
   res.json(notes);
 
@@ -38,7 +41,10 @@ app.post('/api/notes', (req, res) => {
   console.info(`${req.method} request received to add a note`);
 
   // Destructuring assignment for the items in req.body
-  const { title, text } = req.body;
+  const {
+    title,
+    text
+  } = req.body;
 
   // If all the required properties are present
   if (title && text) {
@@ -64,15 +70,15 @@ app.post('/api/notes', (req, res) => {
           './db/db.json',
           JSON.stringify(parsedNotes, null, 4),
           (writeErr) =>
-            writeErr
-              ? console.error(writeErr)
-              : console.info('Successfully updated notes!')
+          writeErr ?
+          console.error(writeErr) :
+          console.info('Successfully updated notes!')
         );
       }
     });
 
     // GET new results
-    app.get('/api/notes', (req, res) => 
+    app.get('/api/notes', (req, res) =>
       res.json(notes));
     const response = {
       status: 'success',
@@ -80,15 +86,12 @@ app.post('/api/notes', (req, res) => {
     };
     console.log(response);
     res.json(response);
-    return;
   } else {
     res.json('Error in posting note');
   }
 });
 
-
-
-  // Report that the app is listening to the Terminal
-  app.listen(PORT, () =>
+// Report that the app is listening to the Terminal
+app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
