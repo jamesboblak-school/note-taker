@@ -6,7 +6,7 @@ const notes = require('./db/db.json');
 
 // Helper method for creating random uuid's
 const uuid = require('./helpers/uuid');
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Middleware for parsing json and URLs
@@ -28,7 +28,6 @@ app.get('/notes', (req, res) =>
 
 // GET request for notes
 app.get('/api/notes', (req, res) => {
-
 
   // Read all saved notes from db.json.
   fs.readFile("./db/db.json", "utf8", (err, data) => {
@@ -52,6 +51,7 @@ app.post('/api/notes', (req, res) => {
 
   // If all the required properties are present
   if (title && text) {
+
     // Variable for the object we will save
     const newNote = {
       title,
@@ -64,6 +64,7 @@ app.post('/api/notes', (req, res) => {
       if (err) {
         console.error(err);
       } else {
+
         // Convert string into JSON object
         const parsedNotes = JSON.parse(data);
 
@@ -96,23 +97,37 @@ app.post('/api/notes', (req, res) => {
   }
 });
 
-  // DELETE route
-  // app.delete("/api/notes/:id", (req, res) => {
-  //   const deleteId = req.params.id;
-  //   fs.readFile("./db/db.json", "utf8", (err, data) => {
-  //     if (err) throw err;
-  //     let notesAll = JSON.parse(data);
-  //     // removes note with same id
-  //     for (let i = 0; i < notesAll.length; i++) {
-  //       if (notesAll[i].id === deleteId) {
-  //         notesAll.splice(i, 1);
-  //       }
-  //     }
-  //     deleteNote(notesAll);
-  //     console.log(`Note ${deleteId} Deleted! `);
-  //     res.send(notesAll);
-  //   });
-  // });
+// DELETE route
+app.delete("/api/notes/:id", (req, res) => {
+  const deleteId = req.params.id;
+  console.log(deleteId);
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
+    if (err) throw err;
+    let notesArr = JSON.parse(data);
+    // removes note with same id
+    for (let i = 0; i < notesArr.length; i++) {
+      if (notesArr[i].id === deleteId) {
+        notesArr.splice(i, 1);
+        console.log(notesArr)
+        // use fs.writeFile 
+
+        fs.writeFile(
+          './db/db.json',
+          JSON.stringify(notesArr, null, 4),
+          (writeErr) =>
+          writeErr ?
+          console.error(writeErr) :
+          console.info('Successfully updated notes!')
+         
+        );
+      }
+    }
+    res.json(data);
+    // deleteNote(notesArr);
+    // console.log(`Note ${deleteId} Deleted! `);
+    // res.send(notesArr);
+  });
+});
 
 // Report that the app is listening to the Terminal
 app.listen(PORT, () =>
