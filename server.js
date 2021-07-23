@@ -3,10 +3,13 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const notes = require('./db/db.json');
+
+// Helper method for creating random uuid's
+const uuid = require('./helpers/uuid');
 const PORT = 3001;
 const app = express();
 
-// Middleware
+// Middleware for parsing json and URLs
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
@@ -26,12 +29,13 @@ app.get('/notes', (req, res) =>
 // GET request for notes
 app.get('/api/notes', (req, res) => {
 
-  // Show notes
-  res.json(notes);
 
-  // Log our request to the terminal
-  console.info(`${req.method} request received to get notes`);
-
+  // Read all saved notes from db.json.
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
+    if (err) throw err;
+    // Parse JSON into object
+    res.json(JSON.parse(data));
+  });
   return;
 });
 
@@ -52,6 +56,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = {
       title,
       text,
+      unique_id: uuid(),
     };
 
     // Obtain existing notes
@@ -77,13 +82,13 @@ app.post('/api/notes', (req, res) => {
       }
     });
 
-    // GET new results
-    app.get('/api/notes', (req, res) =>
-      res.json(notes));
+    // Report if successful
     const response = {
       status: 'success',
       body: newNote,
     };
+
+    // print the response to the Terminal and to the body
     console.log(response);
     res.json(response);
   } else {
