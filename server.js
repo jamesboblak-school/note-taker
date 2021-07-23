@@ -56,7 +56,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = {
       title,
       text,
-      unique_id: uuid(),
+      id: uuid(),
     };
 
     // Obtain existing notes
@@ -95,6 +95,24 @@ app.post('/api/notes', (req, res) => {
     res.json('Error in posting note');
   }
 });
+
+  // DELETE route
+  // app.delete("/api/notes/:id", (req, res) => {
+  //   const deleteId = req.params.id;
+  //   fs.readFile("./db/db.json", "utf8", (err, data) => {
+  //     if (err) throw err;
+  //     let notesAll = JSON.parse(data);
+  //     // removes note with same id
+  //     for (let i = 0; i < notesAll.length; i++) {
+  //       if (notesAll[i].id === deleteId) {
+  //         notesAll.splice(i, 1);
+  //       }
+  //     }
+  //     deleteNote(notesAll);
+  //     console.log(`Note ${deleteId} Deleted! `);
+  //     res.send(notesAll);
+  //   });
+  // });
 
 // Report that the app is listening to the Terminal
 app.listen(PORT, () =>
