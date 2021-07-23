@@ -59,7 +59,7 @@ app.post('/api/notes', (req, res) => {
         // Add a new note
         parsedNotes.push(newNote);
 
-        // Write updated notess back to the file
+        // Write updated notes back to the file
         fs.writeFile(
           './db/db.json',
           JSON.stringify(parsedNotes, null, 4),
@@ -71,17 +71,21 @@ app.post('/api/notes', (req, res) => {
       }
     });
 
+    // GET new results
+    app.get('/api/notes', (req, res) => 
+      res.json(notes));
     const response = {
       status: 'success',
       body: newNote,
     };
-
     console.log(response);
     res.json(response);
+    return;
   } else {
     res.json('Error in posting note');
   }
 });
+
 
 
   // Report that the app is listening to the Terminal
