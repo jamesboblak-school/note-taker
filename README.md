@@ -22,7 +22,7 @@ First, <code>npm install</code> in your Terminal, then <code>node server.js, and
 
 To use this app, click on the Notes button, then add a new Title and Text to your new note, and click the Save diskette icon.  This is a good place to keep a to-do list that is frequently updated.  
 
-![Note Taker app demo gif](./assets/images/note-taker_demo.gif)
+![Note Taker app demo gif](./public/assets/images/note-taker_demo.gif)
 
 
 ## Credits
