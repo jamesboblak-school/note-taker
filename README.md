@@ -3,7 +3,7 @@
 ## Keep a short list of persistent notes in your broswer!
 
 [Open](https://jamesboblak.github.io/note-taker/) Note Taker:
-https://jamesboblak.github.io/note-taker/)
+https://jamesboblak.github.io/note-taker/
 
 ## Table of Contents
 
