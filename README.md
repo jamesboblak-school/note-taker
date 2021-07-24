@@ -17,8 +17,8 @@ https://jamesboblak.github.io/note-taker/
 
 Click [here](https://jamesboblak.github.io/note-taker/) to run the app on Heroku.
 
-To run the code locally:
-Download the code from my repo [here](https://github.com/jamesboblak/note-taker).
+To run the code locally: <br>
+Download the code from my repo [here](https://github.com/jamesboblak/note-taker). <br>
 In Terminal: <br>
 <code>npm install</code> <br>
 then <br>
